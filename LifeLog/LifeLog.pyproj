@@ -4,6 +4,7 @@
     <Name>LifeLog</Name>
     <RootNamespace>LifeLog</RootNamespace>
     <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +38,13 @@
     <Compile Include="ExerciseApp\tests.py" />
     <Compile Include="ExerciseApp\views.py" />
     <Compile Include="ExerciseApp\__init__.py" />
+    <Compile Include="InjuryApp\admin.py" />
+    <Compile Include="InjuryApp\apps.py" />
+    <Compile Include="InjuryApp\migrations\__init__.py" />
+    <Compile Include="InjuryApp\models.py" />
+    <Compile Include="InjuryApp\tests.py" />
+    <Compile Include="InjuryApp\views.py" />
+    <Compile Include="InjuryApp\__init__.py" />
     <Compile Include="manage.py" />
     <Compile Include="LifeLog\__init__.py" />
     <Compile Include="LifeLog\settings.py" />
@@ -44,15 +52,28 @@
     <Compile Include="LifeLog\wsgi.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ExerciseApp\Static\site.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="ExerciseApp\templates\ExerciseApp\index.html" />
+    <Content Include="InjuryApp\templates\InjuryApp\index.html" />
+    <Content Include="LifeLog\templates\shell.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ExerciseApp\" />
     <Folder Include="ExerciseApp\migrations\" />
+    <Folder Include="ExerciseApp\Static\" />
     <Folder Include="ExerciseApp\templates\" />
     <Folder Include="ExerciseApp\templates\ExerciseApp\" />
+    <Folder Include="InjuryApp\" />
+    <Folder Include="InjuryApp\migrations\" />
+    <Folder Include="InjuryApp\templates\" />
+    <Folder Include="InjuryApp\templates\InjuryApp\" />
     <Folder Include="LifeLog\" />
+    <Folder Include="LifeLog\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">
