@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -21,6 +21,24 @@ SEVERITY_CHOICES = [
         (8,"8"),
         (9,"9 - Very severe (can't walk)") # Can't walk
         ]
+
+def max_digit(textField):
+    # Filter out non-digit characters and convert remaining characters to integers
+    digits = [int(char) for char in textField if char.isdigit()]
+
+    if digits:  # Check if there are any digits
+        return max(digits)  # Return the maximum digit
+    else:
+        return None  # Return None if there are no digits
+def mode_digit(textField):
+    # Filter out non-digit characters and convert remaining characters to integers
+    digits = [int(char) for char in textField if char.isdigit()]
+
+    if digits:  # Check if there are any digits
+        return max(set(digits), key=digits.count)  # Return the mode digit
+    else:
+        return None  # Return None if there are no digits
+
 
 
 class Injury(models.Model):
@@ -47,38 +65,23 @@ class Injury(models.Model):
             self.calculated_injury.save()
         # Else create it
         else:
-            Calculated_Injury.objects.create(model_a=self)
+            Calculated_Injury.objects.create(injury=self)
 
     
 
 class Calculated_Injury(models.Model):
-    injury = models.OneToOneField(Injury, on_delete=models.CASCADE, related_name='calculated_injury')
+    injury = models.OneToOneField(Injury, on_delete=models.CASCADE, related_name='calculated_injury', primary_key=True)
 
     max_severity = models.IntegerField()
     mode_severity = models.IntegerField()
     start_date = models.DateField()
     end_date = models.DateField()
     
-    def max_digit(textField):
-        # Filter out non-digit characters and convert remaining characters to integers
-        digits = [int(char) for char in textField if char.isdigit()]
-
-        if digits:  # Check if there are any digits
-            return max(digits)  # Return the maximum digit
-        else:
-            return None  # Return None if there are no digits
-    def mode_digit(textField):
-        # Filter out non-digit characters and convert remaining characters to integers
-        digits = [int(char) for char in textField if char.isdigit()]
-
-        if digits:  # Check if there are any digits
-            return max(set(digits), key=digits.count)  # Return the mode digit
-        else:
-            return None  # Return None if there are no digits
+    
         
     def save(self, *args, **kwargs):
-        self.max_severity = self.max_digit(self.injury.severity)
-        self.mode_severity = self.mode_digit(self.injury.severity)
-        self.start_date = self.injury.start_datetime.astimezone(datetime.utc).date()
-        self.end_date = self.start_date + datetime.timedelta(days=len(self.injury.severity)-1)
+        self.max_severity = max_digit(self.injury.severity)
+        self.mode_severity = mode_digit(self.injury.severity)
+        self.start_date = self.injury.start_datetime.astimezone(timezone.utc).date()
+        self.end_date = self.start_date + timedelta(days=len(self.injury.severity)-1)
         super(Calculated_Injury, self).save(*args, **kwargs)

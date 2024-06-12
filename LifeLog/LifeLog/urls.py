@@ -27,9 +27,12 @@ Including another URLconf
 
 from django.urls import include, re_path
 import ExerciseApp.views
+from django.contrib import admin
+from django.urls import path
 
 # Django processes URL patterns in the order they appear in the array
 urlpatterns = [
     re_path(r'^$', ExerciseApp.views.index, name='index'),
-    re_path(r'^home$', ExerciseApp.views.index, name='home')
+    re_path(r'^home$', ExerciseApp.views.index, name='home'),
+    path("admin/", admin.site.urls),
 ]
