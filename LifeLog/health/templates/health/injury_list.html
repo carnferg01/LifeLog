@@ -1,0 +1,37 @@
+{% extends 'shell.html' %}
+{% block content %}
+<h2>Injury List</h2>
+<a href="{% url 'injury-create' %}">Add New Injury</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Issue</th>
+            <th>Area</th>
+            <th>Side</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Max severity</th>
+            <th>Mode severity</th>
+            <th>Tools</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for injury in object_list %}
+        <tr>
+            <th>{{ injury.issue }}</th>
+            <th>{{ injury.area }}</th>
+            <th>{{ injury.side }}</th>
+            <th>{{ injury.calculated_injury.start_date }}</th>
+            <th>{{ injury.calculated_injury.end_date }}</th>
+            <th>{{ injury.calculated_injury.max_severity }}</th>
+            <th>{{ injury.calculated_injury.mode_severity }}</th>
+            <td>
+                <a href="{% url 'injury-detail' injury.id %}">View</a>
+                <a href="{% url 'injury-update' injury.id %}">Edit</a>
+                <a href="{% url 'injury-delete' injury.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

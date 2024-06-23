@@ -31,20 +31,42 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ExerciseApp\admin.py" />
-    <Compile Include="ExerciseApp\apps.py" />
-    <Compile Include="ExerciseApp\migrations\__init__.py" />
-    <Compile Include="ExerciseApp\models.py" />
-    <Compile Include="ExerciseApp\tests.py" />
-    <Compile Include="ExerciseApp\views.py" />
-    <Compile Include="ExerciseApp\__init__.py" />
-    <Compile Include="InjuryApp\admin.py" />
-    <Compile Include="InjuryApp\apps.py" />
-    <Compile Include="InjuryApp\migrations\__init__.py" />
-    <Compile Include="InjuryApp\models.py" />
-    <Compile Include="InjuryApp\tests.py" />
-    <Compile Include="InjuryApp\views.py" />
-    <Compile Include="InjuryApp\__init__.py" />
+    <Compile Include="equipment\admin.py" />
+    <Compile Include="equipment\apps.py" />
+    <Compile Include="equipment\migrations\__init__.py" />
+    <Compile Include="equipment\models.py" />
+    <Compile Include="equipment\tests.py" />
+    <Compile Include="equipment\views.py" />
+    <Compile Include="equipment\__init__.py" />
+    <Compile Include="exercise\admin.py" />
+    <Compile Include="exercise\apps.py" />
+    <Compile Include="exercise\migrations\__init__.py" />
+    <Compile Include="exercise\models.py" />
+    <Compile Include="exercise\tests.py" />
+    <Compile Include="exercise\views.py" />
+    <Compile Include="exercise\__init__.py" />
+    <Compile Include="health\admin.py" />
+    <Compile Include="health\apps.py" />
+    <Compile Include="health\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="health\migrations\__init__.py" />
+    <Compile Include="health\models.py" />
+    <Compile Include="health\templates\health\injury_list.html">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="health\tests.py" />
+    <Compile Include="health\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="health\views.py" />
+    <Compile Include="health\__init__.py" />
+    <Compile Include="health\management\commands\setup_groups.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="health\management\commands\test_command.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="manage.py" />
     <Compile Include="LifeLog\__init__.py" />
     <Compile Include="LifeLog\settings.py" />
@@ -52,28 +74,59 @@
     <Compile Include="LifeLog\wsgi.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ExerciseApp\Static\site.css">
+    <Content Include="equipment\templates\equipment\index.html" />
+    <Content Include="exercise\templates\exercise\index.html" />
+    <Content Include="get_activity_data.txt">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="ExerciseApp\templates\ExerciseApp\index.html" />
-    <Content Include="InjuryApp\templates\InjuryApp\index.html" />
-    <Content Include="LifeLog\templates\shell.html">
+    <Content Include="health\templates\health\illness_confirm_delete.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="health\templates\health\illness_detail.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="health\templates\health\illness_form.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="health\templates\health\illness_list.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="health\templates\health\index.html" />
+    <Content Include="health\templates\health\injury_confirm_delete.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="health\templates\health\injury_detail.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="health\templates\health\injury_form.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="health\templates\health\injury_summary.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="requirements.txt" />
+    <Content Include="templates\shell.html">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ExerciseApp\" />
-    <Folder Include="ExerciseApp\migrations\" />
-    <Folder Include="ExerciseApp\Static\" />
-    <Folder Include="ExerciseApp\templates\" />
-    <Folder Include="ExerciseApp\templates\ExerciseApp\" />
-    <Folder Include="InjuryApp\" />
-    <Folder Include="InjuryApp\migrations\" />
-    <Folder Include="InjuryApp\templates\" />
-    <Folder Include="InjuryApp\templates\InjuryApp\" />
+    <Folder Include="equipment\" />
+    <Folder Include="equipment\migrations\" />
+    <Folder Include="equipment\templates\" />
+    <Folder Include="equipment\templates\equipment\" />
+    <Folder Include="exercise\" />
+    <Folder Include="exercise\migrations\" />
+    <Folder Include="exercise\templates\" />
+    <Folder Include="exercise\templates\exercise\" />
+    <Folder Include="health\" />
+    <Folder Include="health\migrations\" />
+    <Folder Include="health\templates\" />
+    <Folder Include="health\templates\health\" />
     <Folder Include="LifeLog\" />
+    <Folder Include="health\management\" />
+    <Folder Include="health\management\commands\" />
     <Folder Include="LifeLog\templates\" />
+    <Folder Include="templates\" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

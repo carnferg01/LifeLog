@@ -1,0 +1,15 @@
+{% extends 'shell.html' %}
+{% block content %}
+<h2>Illness Detail</h2>
+<p>ID: {{ object.id }}</p>
+<p>Issue: {{ object.issue }}</p>
+<p>Start date/time: {{ object.start_datetime }}</p>
+<p>End date: {{ object.calculated_illness.end_date }}</p>
+<p>Severity: {{ object.severity }}</p>
+<p>Max severity: {{ object.calculated_illness.max_severity }}</p>
+<p>Mode severity: {{ object.calculated_illness.mode_severity }}</p>
+<p>Description: {{ object.description }}</p>
+<a class="btn btn-secondary" href="{% url 'illness-list' %}">Back to List</a>
+<a class="btn btn-primary" href="{% url 'illness-update' object.id %}">Edit</a>
+<a class="btn btn-danger" href="{% url 'illness-delete' object.id %}">Delete</a>
+{% endblock %}

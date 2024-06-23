@@ -1,0 +1,38 @@
+{% extends 'shell.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Injury Summary</h2>
+<form id="filter-form">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<div id="datatarget">
+</div>
+<script>
+    function fetchData(params = '') {
+        fetch('{% url "injury-summary-fetch-data" %}?' + params.toString(), {
+            headers: {
+                'x-requested-with': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const datatarget = document.getElementById('datatarget');
+            datatarget.innerHTML = data.data;
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchData();
+    });
+
+    document.getElementById('filter-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const params = new URLSearchParams(formData);
+        fetchData(params);
+    });
+</script>
+{% endblock %}

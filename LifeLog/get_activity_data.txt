@@ -1,0 +1,133 @@
+Step 1: Optimize Data Preparation
+Use Aggregation in a Single Query:
+
+Instead of querying the database separately for each activity type, you can use a single query to aggregate data.
+Use Django's Case and When expressions to perform conditional aggregation.
+Precompute Results:
+
+If the data is static or changes infrequently, consider precomputing and caching the results.
+Use Django's caching framework to store precomputed results and reduce database hits.
+Utilize Bulk Operations:
+
+Minimize Python loops and use bulk operations for data processing.
+Here’s an optimized implementation:
+
+python
+Copy code
+from django.db.models import Sum, Case, When, FloatField
+from datetime import datetime, timedelta
+
+def get_activity_data(start_date, end_date):
+    # Generate a list of all dates within the range
+    date_range = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
+    
+    # Define the activity types
+    activity_types = ['running', 'walking', 'track']
+
+    # Use a single query with conditional aggregation
+    daily_totals = Activity.objects.filter(
+        date__range=(start_date, end_date)
+    ).values('date').annotate(
+        total_running=Sum(Case(When(activity_type='running', then='distance'), output_field=FloatField())),
+        total_walking=Sum(Case(When(activity_type='walking', then='distance'), output_field=FloatField())),
+        total_track=Sum(Case(When(activity_type='track', then='distance'), output_field=FloatField()))
+    ).order_by('date')
+
+    # Create a dictionary with default values
+    data_dict = {date.strftime('%Y-%m-%d'): {activity: 0 for activity in activity_types} for date in date_range}
+    
+    # Populate the dictionary with query results
+    for record in daily_totals:
+        record_date = record['date'].strftime('%Y-%m-%d')
+        data_dict[record_date]['running'] = record.get('total_running', 0)
+        data_dict[record_date]['walking'] = record.get('total_walking', 0)
+        data_dict[record_date]['track'] = record.get('total_track', 0)
+    
+    # Convert the dictionary to a list
+    data = [{'date': date, **values} for date, values in data_dict.items()]
+
+    return data
+Step 2: Convert the Data to JSON
+In your Django view, convert the data to JSON and pass it to the template:
+
+python
+Copy code
+import json
+from django.shortcuts import render
+from datetime import datetime
+
+def chart_view(request):
+    # Define your date range
+    start_date = datetime(2023, 1, 1)
+    end_date = datetime(2023, 12, 31)
+    
+    # Prepare the data using the optimized function
+    data = get_activity_data(start_date, end_date)
+
+    # Convert the data to JSON
+    data_json = json.dumps(data)
+
+    return render(request, 'chart.html', {'data_json': data_json})
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stacked Bar Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var data = JSON.parse('{{ data_json|escapejs }}');
+
+        var labels = data.map(function(item) { return item.date; });
+
+        var activityTypes = ['running', 'walking', 'track'];
+        var colors = {
+            'running': 'rgba(75, 192, 192, 0.2)',
+            'walking': 'rgba(255, 159, 64, 0.2)',
+            'track': 'rgba(153, 102, 255, 0.2)'
+        };
+        var borderColors = {
+            'running': 'rgba(75, 192, 192, 1)',
+            'walking': 'rgba(255, 159, 64, 1)',
+            'track': 'rgba(153, 102, 255, 1)'
+        };
+
+        var datasets = activityTypes.map(function(activity) {
+            return {
+                label: activity.charAt(0).toUpperCase() + activity.slice(1),
+                data: data.map(function(item) { return item[activity]; }),
+                backgroundColor: colors[activity],
+                borderColor: borderColors[activity],
+                borderWidth: 1
+            };
+        });
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

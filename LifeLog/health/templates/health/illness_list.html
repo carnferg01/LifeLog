@@ -1,0 +1,33 @@
+{% extends 'shell.html' %}
+{% block content %}
+<h2>Illness List</h2>
+<a href="{% url 'illness-create' %}">Add New Illness</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Issue</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Max severity</th>
+            <th>Mode severity</th>
+            <th>Tools</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for illness in object_list %}
+        <tr>
+            <th>{{ illness.issue }}</th>
+            <th>{{ illness.calculated_illness.start_date }}</th>
+            <th>{{ illness.calculated_illness.end_date }}</th>
+            <th>{{ illness.calculated_illness.max_severity }}</th>
+            <th>{{ illness.calculated_illness.mode_severity }}</th>
+            <td>
+                <a href="{% url 'illness-detail' illness.id %}">View</a>
+                <a href="{% url 'illness-update' illness.id %}">Edit</a>
+                <a href="{% url 'illness-delete' illness.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

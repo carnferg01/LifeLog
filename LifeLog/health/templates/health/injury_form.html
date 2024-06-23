@@ -1,0 +1,11 @@
+{% extends 'shell.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>{% if object %}Edit{% else %}Create{% endif %} Injury</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Save Injury</button>
+    <a class="btn btn-secondary" href="{% url 'injury-list' %}">Cancel</a>
+</form>
+{% endblock %}
