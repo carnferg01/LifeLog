@@ -366,6 +366,8 @@ FodyWeavers.xsd
 # Environments
 .env
 .venv
+env
+venv
 env/
 venv/
 ENV/
