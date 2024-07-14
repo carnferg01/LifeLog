@@ -362,3 +362,12 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /LifeLog/env
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
