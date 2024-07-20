@@ -1,4 +1,0 @@
-*.sqlite3 binary
-
-*.sqlite3 merge=ours
-.gitattributes merge=ours
