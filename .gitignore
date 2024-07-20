@@ -9,3 +9,6 @@ venv.bak/
 
 *.sln
 *.pyproj
+
+.vscode
+.gitignore
