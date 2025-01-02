@@ -15,8 +15,14 @@
 #         self.helper.add_input(Submit('submit', 'Save Injury'))
 
 
-
 from django import forms
+
+# from health.models import Injury
+
+# class InjuryForm(forms.ModelForm):
+#     class Meta:
+#         model = Injury
+#         fields = ['issue', 'area', 'side', 'start_datetime', 'severity', 'description']
 
 class InjurySummaryFilterForm(forms.Form):
     date_from = forms.DateField(required=False, label='Date From', widget=forms.DateInput(attrs={'type': 'date'}))

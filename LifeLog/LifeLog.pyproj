@@ -72,6 +72,12 @@
     <Compile Include="LifeLog\settings.py" />
     <Compile Include="LifeLog\urls.py" />
     <Compile Include="LifeLog\wsgi.py" />
+    <Compile Include="health\templatetags\custom_filters.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="health\templatetags\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="equipment\templates\equipment\index.html" />
@@ -126,6 +132,7 @@
     <Folder Include="health\management\" />
     <Folder Include="health\management\commands\" />
     <Folder Include="LifeLog\templates\" />
+    <Folder Include="health\templatetags\" />
     <Folder Include="templates\" />
   </ItemGroup>
   <ItemGroup>

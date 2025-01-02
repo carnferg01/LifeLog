@@ -119,3 +119,8 @@ STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# DATE_FORMAT = 'Y N j'
+# DATETIME_FORMAT = 'Y N j, G:i:s'
+# SHORT_DATE_FORMAT = 'Y-m-d'
+# SHORT_DATETIME_FORMAT = 'Y-m-d G:i:s'
